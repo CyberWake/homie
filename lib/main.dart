@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +43,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final databaseReference = FirebaseDatabase.instance.reference();
+  StreamSubscription<Event> _sensorDataSubscription;
+
   SensorData data;
   @override
   void initState() {
@@ -49,10 +53,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void readData() {
-    databaseReference.once().then((DataSnapshot snapshot) {
-      data = SensorData.fromDocument(snapshot);
-      print("Temperature is: ${data.temperature}");
-      print("humidity is: ${data.humidity}");
+    _sensorDataSubscription = databaseReference.onValue.listen((Event event) {
+      setState(() {
+        data = SensorData.fromDocument(event.snapshot);
+      });
     });
   }
 
