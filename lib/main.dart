@@ -1,15 +1,27 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      appId: '1:143748364967:android:dd16deb0a053b68a0fb982',
+      apiKey: 'AIzaSyCzhBXkbsAcFKXrl04NI3b0PPhkbhexFXo',
+      messagingSenderId: '143748364967',
+      projectId: 'hometemperature-dd50f',
+      databaseURL: 'https://hometemperature-dd50f.firebaseio.com/',
+    ),
+  );
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Home Temperature',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -28,6 +40,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final databaseReference = FirebaseDatabase.instance.reference();
+  SensorData data;
+  @override
+  void initState() {
+    super.initState();
+    readData();
+  }
+
+  void readData() {
+    databaseReference.once().then((DataSnapshot snapshot) {
+      data = SensorData.fromDocument(snapshot);
+      print("Temperature is: ${data.temperature}");
+      print("humidity is: ${data.humidity}");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,20 +67,33 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'You have pushed the button this many times:',
+              'Temperature is: ${data.temperature}',
+              style: Theme.of(context).textTheme.headline5,
             ),
             Text(
-              'Hello',
-              style: Theme.of(context).textTheme.headline4,
+              'Humidity is: ${data.humidity}',
+              style: Theme.of(context).textTheme.headline5,
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: null,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+    );
+  }
+}
+
+class SensorData {
+  String temperature;
+  String humidity;
+
+  SensorData({
+    this.temperature,
+    this.humidity,
+  });
+
+  factory SensorData.fromDocument(DataSnapshot document) {
+    return SensorData(
+      temperature: document.value['Sensor']['temp'],
+      humidity: document.value['Sensor']['hum'],
     );
   }
 }
