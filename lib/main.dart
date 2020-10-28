@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Home Temperature'),
     );
   }
 }
@@ -45,11 +45,11 @@ class _MyHomePageState extends State<MyHomePage> {
   final databaseReference = FirebaseDatabase.instance.reference();
   StreamSubscription<Event> _sensorDataSubscription;
 
-  SensorData data;
+  SensorData data = SensorData(temperature: "0", humidity: "0");
   @override
   void initState() {
-    super.initState();
     readData();
+    super.initState();
   }
 
   void readData() {
@@ -66,20 +66,43 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Temperature is: ${data.temperature}',
-              style: Theme.of(context).textTheme.headline5,
+      body: Stack(
+        children: <Widget>[
+          Center(child: Image.asset('assets/house-icon.png')),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.19,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.04,
+                    ),
+                    Text(
+                      '${data.temperature} °C',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.002,
+                    ),
+                    Text(
+                      '${data.humidity}%',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.05,
+                    ),
+                  ],
+                ),
+              ],
             ),
-            Text(
-              'Humidity is: ${data.humidity}',
-              style: Theme.of(context).textTheme.headline5,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
