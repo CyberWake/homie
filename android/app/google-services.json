@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "143748364967",
+    "firebase_url": "https://hometemperature-dd50f.firebaseio.com",
+    "project_id": "hometemperature-dd50f",
+    "storage_bucket": "hometemperature-dd50f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:143748364967:android:dd16deb0a053b68a0fb982",
+        "android_client_info": {
+          "package_name": "com.cyberwake.home_temperature"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "143748364967-2heqmqtqn9imk1m54l8gp26frusk52mr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cyberwake.home_temperature",
+            "certificate_hash": "85cdf5ae5eff1677b49fdf4ef436c10a97f3e546"
+          }
+        },
+        {
+          "client_id": "143748364967-i8r6ogftup22897k6jl2ogg1lh9ign7j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGpsKrH2P15YQhovWCo4au7GT04lCCJfA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "143748364967-i8r6ogftup22897k6jl2ogg1lh9ign7j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
