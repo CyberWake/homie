@@ -30,7 +30,6 @@ dependencies:
   cupertino_icons: ^1.0.0
   firebase_core: ^0.5.0
   firebase_database: ^4.1.1
-  flutter_svg: ^0.19.1
 
 dev_dependencies:
   flutter_test:
@@ -50,7 +49,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/house-icon.png
-  #   - images/a_dot_ham.jpeg
+    - assets/rain.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
