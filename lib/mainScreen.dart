@@ -16,6 +16,7 @@ class _MainScreenState extends State<MainScreen> {
   final databaseReference = FirebaseDatabase.instance.reference();
   StreamSubscription<Event> _sensorDataSubscription;
   double height;
+  double width;
 
   SensorData data = SensorData(
       temperature: "0", humidity: "0", isRaining: false, intensity: 0);
@@ -43,13 +44,15 @@ class _MainScreenState extends State<MainScreen> {
     } else if (data.intensity > 1000) {
       return "Drizzling";
     }
-    return "No info";
+    return " ";
   }
 
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true,
@@ -57,13 +60,63 @@ class _MainScreenState extends State<MainScreen> {
       body: Stack(
         children: <Widget>[
           data.isRaining
-              ? Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Image.asset(
-                    'assets/rain.gif',
-                    fit: BoxFit.fitWidth,
+              ? Stack(children: [
+                  Align(
+                    alignment: data.intensity > 2500
+                        ? Alignment.topLeft
+                        : data.intensity > 2000
+                            ? Alignment.topLeft
+                            : Alignment.topCenter,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 20.0,
+                          vertical:
+                              data.intensity > 2000 && data.intensity < 2500
+                                  ? 60.0
+                                  : data.intensity > 2500
+                                      ? 60
+                                      : 40),
+                      child: Image.asset(
+                        'assets/rain.gif',
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
                   ),
-                )
+                  data.intensity > 2000 && data.intensity < 2500
+                      ? Container()
+                      : Align(
+                          alignment: Alignment.topCenter,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 40.0),
+                            child: Image.asset(
+                              'assets/rain.gif',
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                        ),
+                  Align(
+                    alignment: data.intensity > 2500
+                        ? Alignment.topRight
+                        : data.intensity > 2000
+                            ? Alignment.topRight
+                            : Alignment.topCenter,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 20.0,
+                          vertical:
+                              data.intensity > 2000 && data.intensity < 2500
+                                  ? 60.0
+                                  : data.intensity > 2500
+                                      ? 60
+                                      : 40),
+                      child: Image.asset(
+                        'assets/rain.gif',
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
+                  ),
+                ])
               : Container(),
           Center(
             child: Image.asset('assets/house-icon.png'),
@@ -74,18 +127,20 @@ class _MainScreenState extends State<MainScreen> {
               children: [
                 data.isRaining
                     ? Padding(
-                        padding: EdgeInsets.only(top: height * 0.1),
+                        padding: EdgeInsets.only(top: 8.0),
                         child: Text(
                           getIntensity(),
                           style: TextStyle(
-                              fontSize: 24,
+                              fontSize: 22,
                               color: Colors.pink,
                               fontWeight: FontWeight.bold),
                         ),
                       )
                     : Container(),
                 SizedBox(
-                  height: data.isRaining ? height * 0.37 : height * 0.5,
+                  height: data.isRaining
+                      ? height * 0.37 + height * 0.1
+                      : height * 0.52,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,14 +151,20 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     Text(
                       '${data.temperature} °C',
-                      style: Theme.of(context).textTheme.headline5,
+                      style: TextStyle(
+                          fontSize: 22,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.002,
                     ),
                     Text(
-                      '${data.humidity}%',
-                      style: Theme.of(context).textTheme.headline5,
+                      '${data.humidity} %',
+                      style: TextStyle(
+                          fontSize: 22,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.05,
