@@ -1,11 +1,16 @@
 import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:home_temperature/sensorData.dart';
+import 'package:home_temperature/authentication/authenticationWrapper.dart';
+
+import 'file:///C:/Users/VK/Desktop/home_temperature/lib/auth/userAuth.dart';
+import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/enums.dart';
+import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/sensorData.dart';
 
 class MainScreen extends StatefulWidget {
-  MainScreen({Key key, this.title}) : super(key: key);
+  MainScreen({Key key, @required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -14,7 +19,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final databaseReference = FirebaseDatabase.instance.reference();
-  StreamSubscription<Event> _sensorDataSubscription;
+  UserAuth _userAuth = UserAuth();
   double height;
   double width;
 
@@ -27,6 +32,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void readData() {
+    StreamSubscription<Event> _sensorDataSubscription;
     _sensorDataSubscription = databaseReference.onValue.listen((Event event) {
       setState(() {
         data = SensorData.fromDocument(event.snapshot);
@@ -56,6 +62,19 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              _userAuth.signOut();
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                      builder: (context) => Authentication(AuthIndex.LOGIN)));
+            },
+            icon: Icon(Icons.power_settings_new_outlined),
+          )
+        ],
       ),
       body: Stack(
         children: <Widget>[
