@@ -2,11 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:home_temperature/authentication/helpers/formFiledFormatting.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/screens/mainScreen.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/database/userInfoStore.dart';
-
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/theme.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/userDataModel.dart';
+import 'package:home_temperature/database/userInfoStore.dart';
+import 'package:home_temperature/models/theme.dart';
+import 'package:home_temperature/models/userDataModel.dart';
+import 'package:home_temperature/screens/mainScreen.dart';
 
 class SocialRegisterUsername extends StatefulWidget {
   @override

@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/screens/mainScreen.dart';
-
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/auth/userAuth.dart';
+import 'package:home_temperature/auth/userAuth.dart';
+import 'package:home_temperature/screens/mainScreen.dart';
 
 class AuthButtons {
   static final UserAuth _userAuth = UserAuth();

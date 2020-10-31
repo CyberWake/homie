@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:home_temperature/auth/userAuth.dart';
+import 'package:home_temperature/models/provideUser.dart';
+import 'package:home_temperature/models/userDataModel.dart';
 import 'package:provider/provider.dart';
-
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/auth/userAuth.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/provideUser.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/userDataModel.dart';
 
 class UserInfoStore {
   UserDataModel _currentUserModel;
@@ -12,10 +12,12 @@ class UserInfoStore {
       FirebaseFirestore.instance.collection('UsersInfoData');
 
   static final UserAuth _userAuth = UserAuth();
+  final FirebaseMessaging _fcm = FirebaseMessaging();
 
   Future<bool> createUserRecord(
       {String username = "", BuildContext context}) async {
     try {
+      String _fcmToken = await _fcm.getToken();
       print("Started process of record creation");
       DocumentSnapshot userRecord = await _users.doc(_userAuth.user.uid).get();
       if (_userAuth.user != null) {
@@ -28,6 +30,7 @@ class UserInfoStore {
             "email": _userAuth.user.email,
             "photoUrl": _userAuth.user.photoURL,
             "username": username,
+            "fcmToken": _fcmToken
           };
           print("record created");
           _users.doc(_userAuth.user.uid).set(userData);
@@ -43,6 +46,21 @@ class UserInfoStore {
     } catch (e) {
       print(e.toString());
       return false;
+    }
+  }
+
+  Future updateToken({BuildContext context}) async {
+    try {
+      String _fcmToken = await _fcm.getToken();
+      print("run");
+      DocumentSnapshot userRecord = await _users.doc(_userAuth.user.uid).get();
+      _users.doc(_userAuth.user.uid).update({'fcmToken': _fcmToken});
+      userRecord = await _users.doc(_userAuth.user.uid).get();
+      _currentUserModel = UserDataModel.fromDocument(userRecord);
+      Provider.of<CurrentUser>(context, listen: false)
+          .updateCurrentUser(_currentUserModel);
+    } catch (e) {
+      print(e.toString());
     }
   }
 
@@ -75,24 +93,6 @@ class UserInfoStore {
     } catch (e) {
       return false;
     }
-  }
-
-  Future<UserDataModel> getUserInformation({String uid}) async {
-    try {
-      DocumentSnapshot ds = await _users.doc(uid).get();
-      return UserDataModel.fromDocument(ds);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
-
-  Stream<DocumentSnapshot> getUserInfoStream({String uid}) {
-    return _users.doc(uid).snapshots();
-  }
-
-  Future<DocumentSnapshot> getUserInfoFuture({String uid}) {
-    return _users.doc(uid).get();
   }
 
   getUserInfo({String uid}) {

@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:home_temperature/authentication/methods/forgotPasswordForm.dart';
 import 'package:home_temperature/authentication/methods/loginForm.dart';
 import 'package:home_temperature/authentication/methods/registerForm.dart';
-
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/enums.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/theme.dart';
+import 'package:home_temperature/models/enums.dart';
+import 'package:home_temperature/models/theme.dart';
 
 // ignore: must_be_immutable
 class Authentication extends StatefulWidget {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/userDataModel.dart';
+import 'package:home_temperature/models/userDataModel.dart';
 
 class CurrentUser with ChangeNotifier {
   UserDataModel currentUserData;

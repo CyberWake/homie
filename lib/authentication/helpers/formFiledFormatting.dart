@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/theme.dart';
+import 'package:home_temperature/models/theme.dart';
 
 class FormFieldFormatting {
   static formFieldFormatting(

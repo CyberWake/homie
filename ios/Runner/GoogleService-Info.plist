@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>143748364967-36bbdflcm7avrhhvfr5fpgmtm4650av8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.143748364967-36bbdflcm7avrhhvfr5fpgmtm4650av8</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>143748364967-2heqmqtqn9imk1m54l8gp26frusk52mr.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB9OlP8do4MTroGj4cegBW_ncHBwO75w3w</string>
+	<key>GCM_SENDER_ID</key>
+	<string>143748364967</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.cyberwake.homeTemperature</string>
+	<key>PROJECT_ID</key>
+	<string>hometemperature-dd50f</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hometemperature-dd50f.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:143748364967:ios:5397ce043886206d0fb982</string>
+	<key>DATABASE_URL</key>
+	<string>https://hometemperature-dd50f.firebaseio.com</string>
+</dict>
+</plist>

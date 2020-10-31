@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:home_temperature/auth/userAuth.dart';
 import 'package:home_temperature/authentication/helpers/formFiledFormatting.dart';
 import 'package:home_temperature/authentication/helpers/validation.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/theme.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/database/userInfoStore.dart';
-
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/auth/userAuth.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/enums.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/userDataModel.dart';
+import 'package:home_temperature/database/userInfoStore.dart';
+import 'package:home_temperature/models/enums.dart';
+import 'package:home_temperature/models/theme.dart';
+import 'package:home_temperature/models/userDataModel.dart';
 
 class ForgotPasswordForm extends StatefulWidget {
   final ValueChanged<AuthIndex> changeMethod;

@@ -1,13 +1,18 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:home_temperature/auth/userAuth.dart';
 import 'package:home_temperature/authentication/authenticationWrapper.dart';
-
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/auth/userAuth.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/enums.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/sensorData.dart';
+import 'package:home_temperature/database/userInfoStore.dart';
+import 'package:home_temperature/models/enums.dart';
+import 'package:home_temperature/models/provideUser.dart';
+import 'package:home_temperature/models/sensorData.dart';
+import 'package:home_temperature/models/userDataModel.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key, @required this.title}) : super(key: key);
@@ -19,6 +24,10 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final databaseReference = FirebaseDatabase.instance.reference();
+  final FirebaseMessaging _fcm = FirebaseMessaging();
+  UserInfoStore _userInfoStore = UserInfoStore();
+  UserDataModel user;
+  DocumentSnapshot _currentUserInfo;
   UserAuth _userAuth = UserAuth();
   double height;
   double width;
@@ -27,11 +36,16 @@ class _MainScreenState extends State<MainScreen> {
       temperature: "0", humidity: "0", isRaining: false, intensity: 0);
   @override
   void initState() {
-    readData();
     super.initState();
+    readData();
   }
 
-  void readData() {
+  void readData() async {
+    await _userInfoStore.updateToken(context: context);
+    _currentUserInfo =
+        await _userInfoStore.getUserInfo(uid: _userAuth.user.uid);
+    user = UserDataModel.fromDocument(_currentUserInfo);
+    Provider.of<CurrentUser>(context, listen: false).updateCurrentUser(user);
     StreamSubscription<Event> _sensorDataSubscription;
     _sensorDataSubscription = databaseReference.onValue.listen((Event event) {
       setState(() {

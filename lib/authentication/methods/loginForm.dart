@@ -1,15 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:home_temperature/auth/userAuth.dart';
 import 'package:home_temperature/authentication/helpers/authButtons.dart';
 import 'package:home_temperature/authentication/helpers/formFiledFormatting.dart';
 import 'package:home_temperature/authentication/helpers/validation.dart';
 import 'package:home_temperature/authentication/methods/socialRegisterUsername.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/screens/mainScreen.dart';
-
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/auth/userAuth.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/enums.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/theme.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/userDataModel.dart';
+import 'package:home_temperature/models/enums.dart';
+import 'package:home_temperature/models/theme.dart';
+import 'package:home_temperature/models/userDataModel.dart';
+import 'package:home_temperature/screens/mainScreen.dart';
 
 class LoginForm extends StatefulWidget {
   final ValueChanged<AuthIndex> changeMethod;

@@ -7,6 +7,7 @@ class UserDataModel {
   String id;
   String photoUrl;
   String username;
+  String fcmToken;
 
   UserDataModel({
     this.displayName,
@@ -15,6 +16,7 @@ class UserDataModel {
     this.id,
     this.photoUrl,
     this.username,
+    this.fcmToken,
   });
 
   factory UserDataModel.fromDocument(DocumentSnapshot document) {
@@ -24,6 +26,7 @@ class UserDataModel {
       id: document.id,
       photoUrl: document.data()['photoUrl'],
       username: document.data()['username'],
+      fcmToken: document.data()['fcmToken'],
     );
   }
 }

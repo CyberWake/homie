@@ -2,11 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/database/userInfoStore.dart';
+import 'package:home_temperature/database/userInfoStore.dart';
+import 'package:home_temperature/models/provideUser.dart';
+import 'package:home_temperature/models/userDataModel.dart';
 import 'package:provider/provider.dart';
-
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/provideUser.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/userDataModel.dart';
 
 class UserAuth {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -30,15 +29,19 @@ class UserAuth {
         email: email,
         password: password,
       );
-      DocumentSnapshot userSnapshot =
-          await _usersCollection.doc(userCredential.user.uid).get();
-      if (userSnapshot.exists) {
-        UserDataModel user = UserDataModel.fromDocument(userSnapshot);
-        Provider.of<CurrentUser>(context, listen: false)
-            .updateCurrentUser(user);
-        return "success";
+      if (userCredential.user.emailVerified) {
+        DocumentSnapshot userSnapshot =
+            await _usersCollection.doc(userCredential.user.uid).get();
+        if (userSnapshot.exists) {
+          UserDataModel user = UserDataModel.fromDocument(userSnapshot);
+          Provider.of<CurrentUser>(context, listen: false)
+              .updateCurrentUser(user);
+          return "success";
+        } else {
+          return "No user found for this email.";
+        }
       } else {
-        return "No user found for this email.";
+        return "User Not Verified";
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -63,26 +66,21 @@ class UserAuth {
         email: email,
         password: password,
       );
-      print("User logged in");
+      await userCredential.user.sendEmailVerification();
       DocumentSnapshot userRecord =
           await _usersCollection.doc(userCredential.user.uid).get();
       if (!userRecord.exists) {
-        print("record not found new user");
         await UserInfoStore()
             .createUserRecord(username: username)
             .then((value) async {
-          print("Started process of record creation1");
           if (value) {
-            print("record provided to provider");
-            userRecord =
-                await _usersCollection.doc(userCredential.user.uid).get();
-            currentUserModel = UserDataModel.fromDocument(userRecord);
-            Provider.of<CurrentUser>(context, listen: false)
-                .updateCurrentUser(currentUserModel);
+            print("user created");
           }
         });
       }
-      return "success";
+      await _auth.signOut();
+      userCredential = null;
+      return "Check mailbox and verify your account to login";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return 'The password provided is too weak.';

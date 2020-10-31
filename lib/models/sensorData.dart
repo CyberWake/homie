@@ -1,6 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
-
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/auth/userAuth.dart';
+import 'package:home_temperature/auth/userAuth.dart';
 
 class SensorData {
   String temperature;

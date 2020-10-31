@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:home_temperature/authentication/authenticationWrapper.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/screens/mainScreen.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/screens/splashScreen.dart';
+import 'package:home_temperature/screens/mainScreen.dart';
+import 'package:home_temperature/screens/splashScreen.dart';
 import 'package:provider/provider.dart';
+import 'package:home_temperature/auth/userAuth.dart';
+import 'package:home_temperature/models/provideUser.dart';
 
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/auth/userAuth.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/enums.dart';
-import 'file:///C:/Users/VK/Desktop/home_temperature/lib/models/provideUser.dart';
+import 'package:home_temperature/models/enums.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
